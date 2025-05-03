@@ -1,0 +1,59 @@
+package com.in.service;
+
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
+import org.springframework.stereotype.Service;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.in.model.StudentDTO;
+
+import jakarta.annotation.PostConstruct;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
+@Service
+@RequiredArgsConstructor
+@Slf4j
+public class StudentService {
+	/*
+	private Resource studentJsonresource;
+	private String studentJson;
+	private final ObjectMapper mapper;
+	
+	@PostConstruct
+	public void init() throws IOException {
+	this.studentJsonresource=new ClassPathResource("static/data/student.json");
+	//Read JSON file content as String
+	this.studentJson=new String(studentJsonresource.getInputStream().readAllBytes(), 
+					                                                     StandardCharsets.UTF_8);
+	log.info("Student JSON Loaded at startup:{}",studentJson);
+	}
+	
+	public StudentDTO getStudentData()throws IOException {
+		//Convert JSOn string to DTO
+		return mapper.readValue(studentJson, StudentDTO.class);
+	}*/
+	
+	
+	
+	
+	
+	
+	@Value("classpath:static/data/student.json")
+	private Resource studentJsonresource;
+	
+	private final ObjectMapper mapper;
+	
+	public StudentDTO getStudentData()throws IOException {
+		//Read JSON file content as String
+		String studentJson=new String(studentJsonresource.getInputStream().readAllBytes(), 
+				                                                     StandardCharsets.UTF_8);
+		log.info("Student JSON is student: {}",studentJson);
+		//Convert JSOn string to DTO
+		return mapper.readValue(studentJson, StudentDTO.class);
+	}
+}
